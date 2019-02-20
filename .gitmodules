@@ -1,0 +1,3 @@
+[submodule "stg-8nn-scaffold"]
+	path = stg-8nn-scaffold
+	url = https://github.com/adolfogc/stg-8nn-scaffold.git
