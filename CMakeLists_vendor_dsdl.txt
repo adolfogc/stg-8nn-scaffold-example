@@ -1,0 +1,44 @@
+cmake_minimum_required(VERSION 3.5)
+
+##
+## DSDL SOURCE FILES
+##
+
+set(VENDOR_DSDL_DIR dsdl)
+
+set(VENDOR_DSDL_SOURCE_FILES
+  ${VENDOR_DSDL_DIR}/blinky/200.LedControl.uavcan
+)
+
+# Note: this variable is the source directory passed to the DSDL compiler, so you should
+# use the full path.
+set(VENDOR_DSDL_SOURCE_DIRECTORIES ${PROJECT_SOURCE_DIR}/${VENDOR_DSDL_DIR}/blinky)
+
+##
+## DSDL GENERATED FILES
+##
+
+set(DSDL_OUT_DIR dsdl-gen)
+
+set(VENDOR_DSDL_GENERATED_FILES
+  ${DSDL_OUT_DIR}/blinky/LedControl.h
+  ${DSDL_OUT_DIR}/blinky/blinky_LedControl.c
+)
+
+##
+## CUSTOM COMMAND
+##
+
+add_custom_command(
+    OUTPUT ${VENDOR_DSDL_GENERATED_FILES}
+    COMMAND python3 ${PROJECT_SOURCE_DIR}/${CANARD_DIR}/dsdl_compiler/libcanard_dsdlc --outdir ${PROJECT_BINARY_DIR}/${DSDL_OUT_DIR} ${VENDOR_DSDL_SOURCE_DIRECTORIES}
+    MAIN_DEPENDENCY ${CANARD_DIR}/dsdl_compiler/libcanard_dsdlc
+    DEPENDS ${VENDOR_DSDL_SOURCE_FILES}
+)
+
+##
+## SET SOURCES AND HEADERS
+##
+
+set(VENDOR_DSDL_C_INCLUDE ${PROJECT_BINARY_DIR}/${DSDL_OUT_DIR})
+set(VENDOR_DSDL_C_SOURCES ${VENDOR_DSDL_GENERATED_FILES})

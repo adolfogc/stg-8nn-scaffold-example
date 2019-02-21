@@ -24,8 +24,16 @@ cmake_minimum_required(VERSION 3.5)
 set(SCAFFOLD_DIR stg-8nn-scaffold)
 include(${SCAFFOLD_DIR}/CMakeLists_scaffold.txt.in)
 
+##
 ## Override app configuration with app_config.h
+##
 add_definitions(-DAPP_ENABLE_CUSTOM_BUILD_CONFIG)
+
+## Vendor DSDL -> C files
+include(CMakeLists_vendor_dsdl.txt)
+
+list(APPEND SCAFFOLD_SOURCES ${VENDOR_DSDL_C_SOURCES})
+list(APPEND SCAFFOLD_INCLUDE ${VENDOR_DSDL_C_INCLUDE})
 
 ##
 ## Add the blinky source files to the scaffold's lists
@@ -37,6 +45,7 @@ set(BLINKY_SOURCES
   ${BLINKY_DIR}/led.h
   ${BLINKY_DIR}/led.c
   ${BLINKY_DIR}/blinky.c
+  ${BLINKY_DIR}/uavcan_override.c
 )
 
 set(BLINKY_INCLUDE ${BLINKY_DIR})

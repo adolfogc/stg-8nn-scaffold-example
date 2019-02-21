@@ -32,6 +32,6 @@ Led* initLed(void);
 
 void Led_postOn(void);
 void Led_postOff(void);
-void Led_postBlink(uint16_t blink_duration, uint16_t blink_period, uint16_t blinking_time);
+void Led_postBlink(void);
 
 #endif /* _LED_AO_H */

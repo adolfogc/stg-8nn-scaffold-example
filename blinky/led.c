@@ -22,10 +22,6 @@ along with STG-8nn-Scaffold.  If not, see <https://www.gnu.org/licenses/>.
 
 Led g_led;
 
-uint16_t g_blink_duration;
-uint16_t g_blink_period;
-uint16_t g_blinking_time;
-
 enum LedSignals {
     LED_BLINK_SIG = Q_USER_SIG,
     LED_OFF_SIG,
@@ -64,11 +60,8 @@ void Led_postOff(void)
     QACTIVE_POST(&g_led.super, &evt, (void*)0);
 }
 
-void Led_postBlink(uint16_t blink_duration, uint16_t blink_period, uint16_t blinking_time)
+void Led_postBlink()
 {
-    g_blink_duration = blink_duration;
-    g_blink_period = blink_period;
-    g_blinking_time = blinking_time;
     static const QEvt evt = {LED_BLINK_SIG, 0U, 0U};
     QACTIVE_POST(&g_led.super, &evt, (void*)0);
 }
@@ -83,7 +76,7 @@ static QState Led_init(Led * const me, QEvt const * const e)
 {
     (void) e; /* unused parameter */
 
-    return Q_TRAN(&Led_blinking);
+    return Q_TRAN(&Led_off);
 }
 
 static QState Led_off(Led * const me, QEvt const * const e)

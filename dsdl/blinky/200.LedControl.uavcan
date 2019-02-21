@@ -1,0 +1,8 @@
+uint8 ACTION_ON = 1
+uint8 ACTION_OFF = 2
+uint8 ACTION_BLINK = 3
+uint8 action
+
+---
+
+bool ok
