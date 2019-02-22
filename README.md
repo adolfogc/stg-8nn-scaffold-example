@@ -21,3 +21,13 @@ cmake -DSTG_MODEL:STRING=850 -DCMAKE_TOOLCHAIN_FILE=stg-8nn-scaffold/arm-gcc-too
 ```bash
 cmake -DSTG_MODEL:STRING=TESTER -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -GNinja ..
 ```
+
+## Flashing
+
+```bash
+openocd \
+  -f ../stg-8nn-scaffold/openocd/stm32f0x-stlinkv2.cfg \
+  -f ../stg-8nn-scaffold/openocd/stm32f0x-utils.cfg \
+  -c "custom_flash firmware.bin" \
+  -c shutdown
+```
