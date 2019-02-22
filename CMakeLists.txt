@@ -17,6 +17,8 @@
 
 cmake_minimum_required(VERSION 3.5)
 
+project(STG-8nn-Scaffold-Example C ASM)
+
 ##
 ## Add the scaffold include file
 ##
