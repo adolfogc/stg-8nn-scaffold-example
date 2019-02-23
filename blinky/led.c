@@ -20,7 +20,7 @@ along with STG-8nn-Scaffold.  If not, see <https://www.gnu.org/licenses/>.
 #include "bsp.h"
 #include "led.h"
 
-Led g_led;
+Led l_led;
 
 enum LedSignals {
     LED_BLINK_SIG = Q_USER_SIG,
@@ -42,28 +42,28 @@ static QState Led_blinking_on(Led * const me, QEvt const * const e);
 static QState Led_blinking_off(Led * const me, QEvt const * const e);
 
 /* Implementations */
-Led* initLed(void)
+Led* Led_initAO(void)
 {
-    Led_ctor(&g_led);
-    return &g_led;
+    Led_ctor(&l_led);
+    return &l_led;
 }
 
 void Led_postOn(void)
 {
     static const QEvt evt = {LED_ON_SIG, 0U, 0U};
-    QACTIVE_POST(&g_led.super, &evt, (void*)0);
+    QACTIVE_POST(&l_led.super, &evt, (void*)0);
 }
 
 void Led_postOff(void)
 {
     static const QEvt evt = {LED_OFF_SIG, 0U, 0U};
-    QACTIVE_POST(&g_led.super, &evt, (void*)0);
+    QACTIVE_POST(&l_led.super, &evt, (void*)0);
 }
 
 void Led_postBlink()
 {
     static const QEvt evt = {LED_BLINK_SIG, 0U, 0U};
-    QACTIVE_POST(&g_led.super, &evt, (void*)0);
+    QACTIVE_POST(&l_led.super, &evt, (void*)0);
 }
 
 static void Led_ctor(Led* me)

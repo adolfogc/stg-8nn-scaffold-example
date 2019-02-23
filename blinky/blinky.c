@@ -25,7 +25,7 @@ int App_main(void);
 
 Q_DEFINE_THIS_FILE
 
-/* App_main/0 override */
+/* Overrides App_main/0 */
 int App_main(void)
 {
     static QEvt const * uavcanNode_queueBuffer[20];
@@ -33,8 +33,8 @@ int App_main(void)
     static UavcanNode* uavcanNode;
     static Led* led;
 
-    uavcanNode = initUavcanNode();
-    led = initLed();
+    uavcanNode = UavcanNode_initAO();
+    led = Led_initAO();
 
     App_init();
 

@@ -28,7 +28,7 @@ typedef struct LedTag {
     QTimeEvt timeEvent;
 } Led;
 
-Led* initLed(void);
+Led* Led_initAO(void);
 
 void Led_postOn(void);
 void Led_postOff(void);

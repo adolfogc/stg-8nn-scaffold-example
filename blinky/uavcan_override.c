@@ -27,10 +27,12 @@ along with STG-8nn-Scaffold.  If not, see <https://www.gnu.org/licenses/>.
 
 /* Prototypes */
 static void blinky_LedControlHandle(CanardRxTransfer* transfer);
+
+/* Overrides' prototypes */
 bool shouldAcceptTransferExtend(const CanardInstance* instance, uint64_t* outDataTypeSignature, uint16_t dataTypeId, CanardTransferType transferType, uint8_t sourceNodeId);
 void onTransferReceivedExtend(CanardInstance* instance, CanardRxTransfer* transfer);
 
-/* Implementations */
+/* Overrides shouldAcceptTransferExtend/5 */
 bool shouldAcceptTransferExtend(const CanardInstance* instance, uint64_t* outDataTypeSignature, uint16_t dataTypeId, CanardTransferType transferType, uint8_t sourceNodeId)
 {
       switch(dataTypeId) {
@@ -42,6 +44,7 @@ bool shouldAcceptTransferExtend(const CanardInstance* instance, uint64_t* outDat
       }
 }
 
+/* Overrides onTransferReceivedExtend/2 */
 void onTransferReceivedExtend(CanardInstance* instance, CanardRxTransfer* transfer)
 {
     switch(transfer->data_type_id) {
@@ -53,6 +56,7 @@ void onTransferReceivedExtend(CanardInstance* instance, CanardRxTransfer* transf
     }
 }
 
+/* Local implementations */
 static void blinky_LedControlHandle(CanardRxTransfer* transfer)
 {
     uint8_t buffer[BLINKY_LEDCONTROL_REQUEST_MAX_SIZE];
