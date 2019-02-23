@@ -20,7 +20,7 @@ along with STG-8nn-Scaffold.  If not, see <https://www.gnu.org/licenses/>.
 #include "bsp.h"
 #include "led.h"
 
-Led l_led;
+static Led l_led;
 
 enum LedSignals {
     LED_BLINK_SIG = Q_USER_SIG,
