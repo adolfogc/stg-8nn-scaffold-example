@@ -30,13 +30,17 @@ int App_main(void)
 {
     static QEvt const * uavcanNode_queueBuffer[20];
     static QEvt const * led_queueBuffer[10];
-    static UavcanNode* uavcanNode;
-    static Led* led;
+    static UavcanNode* uavcanNode = NULL;
+    static Led* led = NULL;
 
     uavcanNode = UavcanNode_initAO();
     led = Led_initAO();
 
-    App_init();
+    BSP_init(); /* Initialize the hardware. */
+
+    BSP_Led_on();
+    BSP_CAN_init(); /* Inititalize the CAN hardware for use with Libcanard */
+    BSP_Led_off();
 
     QACTIVE_START((QActive*)&uavcanNode->super,
       2U,
