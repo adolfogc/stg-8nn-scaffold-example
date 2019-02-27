@@ -24,7 +24,7 @@ project(STG-8nn-Scaffold-Example C ASM)
 ##
 
 set(SCAFFOLD_DIR stg-8nn-scaffold)
-include(${SCAFFOLD_DIR}/CMakeLists_scaffold.txt.in)
+include(${SCAFFOLD_DIR}/CMakeLists_scaffold.txt)
 
 ##
 ## Override app configuration with app_config.h
@@ -56,38 +56,29 @@ list(APPEND SCAFFOLD_SOURCES ${BLINKY_SOURCES})
 list(APPEND SCAFFOLD_INCLUDE ${BLINKY_INCLUDE})
 
 ##
-## Configure build
+## ELF file
 ##
-
-set(OUTPUT_NAME firmware)
-
-##
-## elf definition
-##
-
 add_executable(${OUTPUT_NAME}.elf ${SCAFFOLD_SOURCES})
 target_include_directories(${OUTPUT_NAME}.elf PRIVATE ${SCAFFOLD_INCLUDE})
 
 ##
-## linker script and bin file
+## Platform specific commands
 ##
-
 if("${CMAKE_SYSTEM_PROCESSOR}" MATCHES "arm")
-  ## Alternatively, you can use a modified copy of the STM32F091CCUx_FLASH.ld file instead.
-  add_custom_command(
-    TARGET ${OUTPUT_NAME}.elf PRE_LINK
-    COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/${SCAFFOLD_DIR}/dependencies/stm32cube/gnu/STM32F091CCUx_FLASH.ld ${PROJECT_BINARY_DIR}/stg8nn.ld
-  )
+  ###
+  ### ARM
+  ###
 
+  ### BIN file
   add_custom_command(TARGET ${OUTPUT_NAME}.elf
     POST_BUILD
     COMMAND ${CMAKE_OBJCOPY} -O binary -S ${OUTPUT_NAME}.elf ${OUTPUT_NAME}.bin
   )
-endif()
+else()
+  ###
+  ### x86
+  ###
 
-##
-## tester libraries
-##
-if(NOT "${CMAKE_SYSTEM_PROCESSOR}" MATCHES "arm")
+  ### Link to PThreads library
   target_link_libraries(${OUTPUT_NAME}.elf pthread)
 endif()
